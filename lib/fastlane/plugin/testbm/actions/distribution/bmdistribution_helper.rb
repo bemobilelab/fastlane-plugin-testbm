@@ -1,51 +1,11 @@
 require 'fastlane/action'
 
 module Fastlane
-  module Actions
-    class BmdistributionAction < Action
-      def self.run(params)
-        app_information = params[:app_information]
-        platform_type = params[:platform_type]
-        self.distribution_func_send_to_firebase(app_information, platform_type)  
-        UI.message("Version distributed!")
-      end
 
-      def self.description
-        "Distributes an app version via firebase, testflight, browsertack or the play store."
-      end
+  module Helper
+    class BmDistribution
 
-      def self.authors
-        ["Bemobile"]
-      end
-
-      def self.return_value
-        # If your method provides a return value, you can describe here what it does
-      end
-
-      def self.details
-        "TODO"
-      end
-
-      def self.available_options
-        [
-          FastlaneCore::ConfigItem.new(key: :app_information,
-                                   env_name: "APP_INFORMATION",
-                                description: "The app information including name, version",
-                                   optional: false,
-                                       type: Hash),
-          FastlaneCore::ConfigItem.new(key: :platform_type,
-                                   env_name: "PLATFORM_TYPE",
-                                description: "Indicates platform wheter android or ios",
-                                   optional: false,
-                                       type: String)
-        ]
-      end
-
-      def self.is_supported?(platform)
-        true
-      end
-
-      def self.distribution_func_send_to_firebase(app_information, platform_type)
+      def self.send_to_firebase(other_action, app_information, platform_type)
         version_info = Helper::BmHelper.version_func_get_version(platform_type:platform_type)
         fabric_build_number = version_info[:build_number]
     
@@ -97,7 +57,8 @@ module Fastlane
         other_action.bmslack(message_text: message_text)
       end
 
-      def self.distribution_func_send_to_browserstack(app_information, apk_location, platform_type)
+      #JUST FOR ANDROID? 
+      def self.send_to_browserstack(other_action, app_information, platform_type, apk_location)        
         version_info = Helper::BmHelper.version_func_get_version(platform_type:platform_type)
         username = ENV["BROWSERSTACK_USERNAME"]
         access_key = ENV["BROWSERSTACK_ACCESS_KEY"]
@@ -107,7 +68,14 @@ module Fastlane
         File.rename(apk_location, apk_new_path)
         other_action.upload_to_browserstack_app_live(browserstack_username: username, browserstack_access_key: access_key, file_path: apk_new_path)
       end
-  
+
+
+
+
+
+
+
+      #TODO: NOT MIGRATED OR TESTED YET 
       def self.distribution_func_testflight(app_information)  
         version_info = Helper::BmHelper.version_func_get_version(platform_type:Helper::BmHelper::CONST_PROJECT_TYPE__IOS)
         testflight_notes = "Version #{version_info[:build_number]} from #{app_information[:app_name]} \n\n#{app_information[:changelog]}"
@@ -132,12 +100,14 @@ module Fastlane
         message_text = "#{app_information[:app_name]} App successfully released to TestFlight!"
         other_action.bmslack(message_text: message_text)                                        
       end
-  
+      
+      #TODO: NOT MIGRATED OR TESTED YET 
       def self.distribution_func_itunes_connect(app_information)  
         other_action.appstore(force: true, skip_screenshots: true)
         message_text = "#{app_information[:app_name]} App successfully uploaded to Itunes Connect!"
         other_action.bmslack(message_text: message_text)     
       end
+
 
     end
   end
