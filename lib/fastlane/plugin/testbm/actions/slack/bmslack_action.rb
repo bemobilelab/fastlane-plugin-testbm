@@ -7,9 +7,9 @@ module Fastlane
         message_text = params[:message_text]
         is_exception = params[:is_exception] || false
         if is_exception
-          self.slack_func_notify_error_in_lane(message_text)
+            Helper::BmSlack::notify_error_in_lane(other_action, message_text)
         else
-          self.slack_func_notify(message_text)
+            Helper::BmSlack::notify(other_action, message_text)
         end       
         UI.message("Message sent to Slack!")
       end
@@ -51,32 +51,6 @@ module Fastlane
 
       def self.is_supported?(platform)
         true
-      end
-
-      def self.slack_func_notify(message_text)
-        other_action.slack(
-            message: message_text,
-            success: true,
-            default_payloads: [:lane, :git_branch, :git_author],
-            icon_url: ENV["SLACK_ICON"],
-            username: "Bemobile Fastlane Plugin - #{ENV["PRIVATE_APP_NAME"]}")
-      end
-
-      
-      #Notify an error of the lane and show the error that fastlane has
-      def self.slack_func_notify_error_in_lane(message_text)
-        payload = {
-            "Build Date" => Time.new.to_s,
-            "Error Message" => message_text
-        }
-
-        other_action.slack(
-            message: "#{ENV["PRIVATE_APP_NAME"]} App build stop with error",
-            success: false,
-            icon_url: ENV["SLACK_ICON"],
-            username: "Bemobile Fastlane Plugin - #{ENV["PRIVATE_APP_NAME"]}",
-            payload: payload)
-
       end
 
     end

@@ -67,6 +67,9 @@ module Fastlane
         apk_new_path = apk_path + "/#{app_information[:app_name]}_#{app_information[:environment]}_#{version_info[:version_number]}_#{version_info[:build_number]}.apk"
         File.rename(apk_location, apk_new_path)
         other_action.upload_to_browserstack_app_live(browserstack_username: username, browserstack_access_key: access_key, file_path: apk_new_path)
+
+        message_text = "#{app_information[:app_name]} App successfully released to BrowserStack!"
+        other_action.bmslack(message_text: message_text)
       end
 
 
