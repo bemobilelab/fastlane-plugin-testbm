@@ -5,13 +5,13 @@ module Fastlane
     class BmversionAction < Action
       def self.run(params)
         platform_type = params[:platform_type]
-        self.version_func_get_version(platform_type)
+        Helper::BmVersion::get_version(platform_type)
       end
 
       def self.description
         "TODO"
       end
-
+      
       def self.authors
         ["Bemobile"]
       end
@@ -36,21 +36,6 @@ module Fastlane
 
       def self.is_supported?(platform)
         true
-      end
-
-      def self.version_func_get_version(platform_type)
-        build_number = ""
-        version_number = ""
-    
-        if platform_type == Helper::BmHelper::CONST_PROJECT_TYPE__IOS
-            version_number = Actions.lane_context[Actions::SharedValues::VERSION_NUMBER]
-            build_number = Actions.lane_context[Actions::SharedValues::BUILD_NUMBER]
-        elsif
-            version_number = File.read("version.name").to_s  
-            build_number = File.read("version.number").to_s  
-        end
-    
-        {build_number: build_number, version_number: version_number}
       end
 
     end
