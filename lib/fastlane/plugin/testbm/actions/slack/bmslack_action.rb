@@ -1,5 +1,7 @@
 require 'fastlane/action'
 
+
+#aqui hya que quitar el exception 
 module Fastlane
   module Actions
     class BmslackAction < Action

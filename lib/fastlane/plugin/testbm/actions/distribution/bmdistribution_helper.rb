@@ -44,17 +44,16 @@ module Fastlane
     
         firebase_login_token = ENV["FIREBASE_LOGIN_TOKEN"]
         if fabric_groups.length > 0 && fabric_mails.length > 0
-            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, testers: fabric_mails, groups: fabric_groups, release_notes: fabric_notes, debug: true)
+            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, testers: fabric_mails, groups: fabric_groups, release_notes: fabric_notes)
         elsif fabric_groups.length > 0
-            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, groups: fabric_groups, release_notes: fabric_notes, debug: true)
+            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, groups: fabric_groups, release_notes: fabric_notes)
         elsif fabric_mails.length > 0
-            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, testers: fabric_mails, release_notes: fabric_notes, debug: true)
+            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, testers: fabric_mails, release_notes: fabric_notes)
         else
-            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, release_notes: fabric_notes, debug: true)
+            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, release_notes: fabric_notes)
         end
     
-        message_text = "#{app_information[:app_name]} App successfully released to Firebase!"
-        other_action.bmslack(message_text: message_text)
+        other_action.bmslacknewversion(destiny: "Firebase", app_information: app_information, platform_type: platform_type)
       end
 
       #JUST FOR ANDROID? 
@@ -67,9 +66,10 @@ module Fastlane
         apk_new_path = apk_path + "/#{app_information[:app_name]}_#{app_information[:environment]}_#{version_info[:version_number]}_#{version_info[:build_number]}.apk"
         File.rename(apk_location, apk_new_path)
         other_action.upload_to_browserstack_app_live(browserstack_username: username, browserstack_access_key: access_key, file_path: apk_new_path)
-
-        message_text = "#{app_information[:app_name]} App successfully released to BrowserStack!"
-        other_action.bmslack(message_text: message_text)
+        #TODO: Hay que borrar el APK luego de que se envie? o esto lo va borrando solo el plugin?
+        
+        
+        other_action.bmslacknewversion(destiny: "BrowserStack", app_information: app_information, platform_type: platform_type)
       end
 
 
