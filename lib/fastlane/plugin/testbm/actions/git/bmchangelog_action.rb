@@ -2,13 +2,13 @@ require 'fastlane/action'
 
 module Fastlane
   module Actions
-    class SalutationAction < Action
+    class BmchangelogAction < Action
       def self.run(params)
-        UI.message("Hello World!" + params[:person_name])
+        ENV["PRIVATE_CHANGELOG"] = Helper::BmGit::get_changelog(other_action)
       end
 
       def self.description
-        "Returns hello world"
+        "Save changelog in a ENV variable"
       end
 
       def self.authors
@@ -20,8 +20,7 @@ module Fastlane
       end
 
       def self.details
-        # Optional:
-        "Just a test plugin"
+        #
       end
 
       def self.available_options
@@ -35,12 +34,10 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        # Adjust this if your plugin only works for a particular platform (iOS vs. Android, for example)
-        # See: https://docs.fastlane.tools/advanced/#control-configuration-by-lane-and-by-platform
-        #
-        # [:ios, :mac, :android].include?(platform)
         true
       end
+
     end
   end
 end
+

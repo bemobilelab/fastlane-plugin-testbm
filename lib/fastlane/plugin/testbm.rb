@@ -4,7 +4,11 @@ module Fastlane
   module Testbm
     # Return all .rb files inside the "actions" and "helper" directory
     def self.all_classes
-      Dir[File.expand_path('**/{actions,helper}/*.rb', File.dirname(__FILE__))]
+      # This sintaxis could be improved
+      Dir[
+        File.expand_path('**/{actions,helper,actions/git}/*.rb', File.dirname(__FILE__)), 
+        File.expand_path('**/actions/**/*.rb', File.dirname(__FILE__))
+      ]
     end
   end
 end
