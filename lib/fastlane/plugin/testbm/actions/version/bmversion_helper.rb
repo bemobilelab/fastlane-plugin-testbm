@@ -43,15 +43,21 @@ module Fastlane
                 #check that the git is clean so the only change that is commited is the new version number
                 other_action.ensure_git_status_clean()
                 
-                build_number = version_func_get_time_with_build_number_format() 
+                #build_number = version_func_get_time_with_build_number_format() 
                 
                 if platform_type == Helper::BmHelper::CONST_PROJECT_TYPE__IOS
+                    # TODO Falta hacer el build_numebr com en adnroid 
+
                     #this functions increment/set the version in all the schemas of the project
                     increment_build_number(build_number: build_number, xcodeproj: app_information[:ios][:xcodeproj])
                     increment_version_number(bump_type: "patch")
 
                 elsif 
-                    version_name = version_name = File.read("version.name").to_s  
+
+                    build_number = File.read("version.number").to_i
+                    build_number = build_number + 1
+
+                    version_name = File.read("version.name").to_s  
                     parts = version_name.split('.')
                     part_patch = parts[2].to_i
                     part_patch = part_patch + 1
@@ -96,20 +102,6 @@ module Fastlane
                 #    push_to_git_remote(local_branch: actual_branch_name, remote_branch: actual_branch_name)
                 #end
             end
-
-
-            # ================ HELPERS ====================
-
-            def self.version_func_get_time_with_build_number_format() 
-                time = Time.now.utc
-                format_for_time = "%d%02d%02d%02d%02d"
-                time_parts_to_format = [ time.year, time.month, time.day, time.hour, time.min ]
-                time_with_format = format_for_time % time_parts_to_format
-                return time_with_format[2..11]
-            end
-
-
-
   
         end
     end
