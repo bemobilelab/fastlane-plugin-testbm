@@ -4,13 +4,13 @@ module Fastlane
   module Actions
     class SalutationAction < Action
       def self.run(params)
-        UI.message("Hello World! #{Testbm::VERSION}" + )
+        UI.message("Hello World! #{Testbm::VERSION}")
       end
 
       def self.description
         "Returns hello world"
       end
-      
+
       def self.authors
         ["Bemobile"]
       end
