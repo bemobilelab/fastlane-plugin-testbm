@@ -44,13 +44,13 @@ module Fastlane
     
         firebase_login_token = ENV["FIREBASE_LOGIN_TOKEN"]
         if fabric_groups.length > 0 && fabric_mails.length > 0
-            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, testers: fabric_mails, groups: fabric_groups, release_notes: fabric_notes)
+            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, testers: fabric_mails, groups: fabric_groups, release_notes: fabric_notes, debug: true)
         elsif fabric_groups.length > 0
-            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, groups: fabric_groups, release_notes: fabric_notes)
+            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, groups: fabric_groups, release_notes: fabric_notes, debug: true)
         elsif fabric_mails.length > 0
-            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, testers: fabric_mails, release_notes: fabric_notes)
+            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, testers: fabric_mails, release_notes: fabric_notes, debug: true)
         else
-            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, release_notes: fabric_notes)
+            other_action.firebase_app_distribution(app: firebase_app_id, firebase_cli_token: firebase_login_token, release_notes: fabric_notes, debug: true)
         end
     
         other_action.bmslacknewversion(destiny: "Firebase", app_information: app_information, platform_type: platform_type)
