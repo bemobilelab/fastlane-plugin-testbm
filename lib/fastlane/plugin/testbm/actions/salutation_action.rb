@@ -4,13 +4,13 @@ module Fastlane
   module Actions
     class SalutationAction < Action
       def self.run(params)
-        UI.message("Hello World!" + params[:person_name])
+        UI.message("Hello World! #{Testbm::VERSION}" + )
       end
 
       def self.description
         "Returns hello world"
       end
-
+      
       def self.authors
         ["Bemobile"]
       end
@@ -25,13 +25,7 @@ module Fastlane
       end
 
       def self.available_options
-        [
-          FastlaneCore::ConfigItem.new(key: :person_name,
-                                   env_name: "PERSON_NAME",
-                                description: "The person's name",
-                                   optional: false,
-                                       type: String)
-        ]# If your method provides a return value, you can describe here what it does
+        []
       end
 
       def self.is_supported?(platform)
