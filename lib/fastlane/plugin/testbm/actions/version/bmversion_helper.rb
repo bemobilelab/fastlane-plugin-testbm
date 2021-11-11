@@ -89,18 +89,8 @@ module Fastlane
 
                 actual_branch_name = other_action.git_branch
                 puts "Branch #{actual_branch_name}"
-                other_action.push_to_git_remote
+                other_action.push_to_git_remote(local_branch: "HEAD", remote_branch: actual_branch_name)
                 
-                # Esta para muchas veces da problemas, hay que terminar de darle une vuelta, en general
-                # se debe hacer push a la misma rama en la que estes, por lo tanto, en teoria, solo se deberia tener que poner other_action
-
-                #push_to_git_remote(local_branch: "HEAD", remote_branch: actual_branch_name)
-            
-                #if actual_branch_name == "develop"
-                #    push_to_git_remote(local_branch: "HEAD", remote_branch: actual_branch_name)
-                #else 
-                #    push_to_git_remote(local_branch: actual_branch_name, remote_branch: actual_branch_name)
-                #end
             end
   
         end
