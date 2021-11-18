@@ -2,12 +2,10 @@ require 'fastlane/action'
 
 module Fastlane
   module Actions
-    class BmsendfirebaseAction < Action
+    class BmsendfirebaseiosAction < Action
       def self.run(params)
         app_information = params[:app_information]
-        platform_type = params[:platform_type]
-
-        Helper::BmDistribution::send_to_firebase(other_action, app_information, platform_type)  
+        Helper::BmDistribution::send_to_firebase(other_action, app_information, Helper::BmHelper::CONST_PROJECT_TYPE__IOS)  
         UI.message("Version distributed!")
       end
 
@@ -33,12 +31,7 @@ module Fastlane
                                    env_name: "APP_INFORMATION",
                                 description: "The app information including name, version",
                                    optional: false,
-                                       type: Hash),
-          FastlaneCore::ConfigItem.new(key: :platform_type,
-                                   env_name: "PLATFORM_TYPE",
-                                description: "Indicates platform wheter android or ios",
-                                   optional: false,
-                                       type: String)
+                                       type: Hash)
         ]
       end
 
