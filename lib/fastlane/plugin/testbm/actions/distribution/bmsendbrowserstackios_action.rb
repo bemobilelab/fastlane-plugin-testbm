@@ -2,14 +2,11 @@ require 'fastlane/action'
 
 module Fastlane
   module Actions
-    class BmsendbrowserstackAction < Action
+    class BmsendbrowserstackiosAction < Action
       def self.run(params)
         app_information = params[:app_information]
-        platform_type = params[:platform_type]
-
-        apk_location = "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
-
-        Helper::BmDistribution::send_to_browserstack(other_action, app_information, platform_type, apk_location)  
+        ipa_location = lane_context[SharedValues::IPA_OUTPUT_PATH]
+        Helper::BmDistribution::send_to_browserstack(other_action, app_information, Helper::BmHelper::CONST_PROJECT_TYPE__IOS, ipa_location)  
         UI.message("Version distributed!")
       end
 

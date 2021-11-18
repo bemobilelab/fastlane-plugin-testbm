@@ -24,10 +24,10 @@ module Fastlane
         UI.message("Hello from the testbm plugin helper!")
       end
 
-      def self.version_func_get_version(platform_type)
+      def self.version_func_get_version(platform_type:)
         build_number = ""
         version_number = ""
-    
+
         if platform_type == Helper::BmHelper::CONST_PROJECT_TYPE__IOS
             version_number = Actions.lane_context[Actions::SharedValues::VERSION_NUMBER]
             build_number = Actions.lane_context[Actions::SharedValues::BUILD_NUMBER]

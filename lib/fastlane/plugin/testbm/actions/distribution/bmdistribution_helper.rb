@@ -56,26 +56,38 @@ module Fastlane
         other_action.bmslacknewversion(destiny: "Firebase", app_information: app_information, platform_type: platform_type)
       end
 
-      #JUST FOR ANDROID? 
-      def self.send_to_browserstack(other_action, app_information, platform_type, apk_location)        
+      def self.send_to_browserstack(other_action, app_information, platform_type, file_path)  
+
+        new_file_path = ""
         version_info = Helper::BmHelper.version_func_get_version(platform_type:platform_type)
-        username = ENV["BROWSERSTACK_USERNAME"]
-        access_key = ENV["BROWSERSTACK_ACCESS_KEY"]
-    
-        apk_path = File.dirname(apk_location)
-        apk_new_path = apk_path + "/#{app_information[:app_name]}_#{app_information[:environment]}_#{version_info[:version_number]}_#{version_info[:build_number]}.apk"
-        File.rename(apk_location, apk_new_path)
-        other_action.upload_to_browserstack_app_live(browserstack_username: username, browserstack_access_key: access_key, file_path: apk_new_path)
-        #TODO: Hay que borrar el APK luego de que se envie? o esto lo va borrando solo el plugin?
-        
+
+        if platform_type == Helper::BmHelper::CONST_PROJECT_TYPE__IOS
+          ipa_location = file_path
+          ipa_path = File.dirname(ipa_location)
+          ipa_new_path = ipa_path + "/#{app_information[:app_name]}_#{app_information[:environment]}_#{version_info[:version_number]}_#{version_info[:build_number]}.ipa"
+          File.rename(ipa_location, ipa_new_path)
+          
+          new_file_path = ipa_new_path
+        end
+
+        if platform_type == Helper::BmHelper::CONST_PROJECT_TYPE__ANDROID
+          apk_location = file_path
+          apk_path = File.dirname(apk_location)
+          apk_new_path = apk_path + "/#{app_information[:app_name]}_#{app_information[:environment]}_#{version_info[:version_number]}_#{version_info[:build_number]}.apk"
+          File.rename(apk_location, apk_new_path)
+
+          new_file_path = apk_new_path
+        end 
+
+        other_action.upload_to_browserstack_app_live(
+          browserstack_username: ENV["BROWSERSTACK_USERNAME"],
+          browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
+          file_path: new_file_path
+        )
+        #TODO: Hay que borrar el APK o IPA luego de que se envie? o esto lo va borrando solo el plugin?
         
         other_action.bmslacknewversion(destiny: "BrowserStack", app_information: app_information, platform_type: platform_type)
       end
-
-
-
-
-
 
 
       #TODO: NOT MIGRATED OR TESTED YET 

@@ -2,7 +2,7 @@ require 'fastlane/action'
 
 module Fastlane
   module Actions
-    class BmbuildAction < Action
+    class BmbuildandroidAction < Action
       def self.run(params)
         app_information = params[:app_information]
         other_action.gradle(task:"assemble", build_type: app_information[:android][:build_type])
