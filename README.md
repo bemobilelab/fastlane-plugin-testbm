@@ -50,3 +50,42 @@ For more information about how the `fastlane` plugin system works, check out the
 ## About _fastlane_
 
 _fastlane_ is the easiest way to automate beta deployments and releases for your iOS and Android apps. To learn more, check out [fastlane.tools](https://fastlane.tools).
+
+
+
+
+
+########
+
+1. Instalar Ruby, Fastlane, Bundler, Gems https://docs.fastlane.tools/
+2
+
+
+
+
+
+
+.env y si el valor no esta entonces lo busca en .env.default
+Esto se podria mejorar, 
+
+
+
+
+tener configurador firebase 
+
+configiurar fastlane 
+https://docs.fastlane.tools/getting-started/android/setup/
+
+
+en Gemfile 
+
+source "https://rubygems.org"
+
+gem "fastlane"
+
+plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
+eval_gemfile(plugins_path) if File.exist?(plugins_path)
+
+luego bundle install 
+
+builds/0.0.10/0000000009

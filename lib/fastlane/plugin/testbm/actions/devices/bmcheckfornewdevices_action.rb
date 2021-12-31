@@ -22,7 +22,7 @@ module Fastlane
                 )
 
                 api_key = other_action.app_store_connect_api_key()
-                other_action.register_devices(devices_file: temp_firebase_testers_file)
+                other_action.register_devices(devices_file: temp_firebase_testers_file, api_key: api_key)
 
                 sh("rm #{temp_firebase_testers_file}")            
             end
