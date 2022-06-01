@@ -46,7 +46,7 @@ module Fastlane
 
         version_location = file_path
         version_path = File.dirname(version_location)
-        version_new_path = version_path + "/#{project_information.get_app_name}_#{project_information.get_environment}_#{version_info[:version_number]}_#{version_info[:build_number]}#{version_extension}"
+        version_new_path = version_path + "/#{ENV["PRIVATE_APP_NAME"]}_#{project_information.get_environment}_#{version_info[:version_number]}_#{version_info[:build_number]}#{version_extension}"
         File.rename(version_location, version_new_path)
 
 
@@ -64,7 +64,7 @@ module Fastlane
       #TODO: NOT MIGRATED OR TESTED YET 
       def self.distribution_func_testflight(project_information)  
         version_info = Helper::BmHelper.version_func_get_version(platform_type:Helper::BmHelper::CONST_PROJECT_TYPE__IOS)
-        testflight_notes = "Version #{version_info[:build_number]} from #{project_information.get_app_name} \n\n#{app_information[:changelog]}"
+        testflight_notes = "Version #{version_info[:build_number]} from #{ENV["PRIVATE_APP_NAME"]} \n\n#{app_information[:changelog]}"
     
         testflight_groups = nil
         testflight_groups = project_information.get_private_fabric_groups

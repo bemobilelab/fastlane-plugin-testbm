@@ -14,7 +14,7 @@ module Fastlane
         message_text = ""
 
         payload = {
-            "App Name" => project_information.get_app_name,
+            "App Name" => ENV["PRIVATE_APP_NAME"],
             "Platform" => platform_type,
             "Destiny" => destiny,
             "Build Date" => Time.new.to_s  
