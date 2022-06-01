@@ -35,6 +35,21 @@ To automatically fix many of the styling issues, use
 rubocop -a
 ```
 
+## Usage
+
+Before any lane you will need create a ruby file
+```
+class LoadLaneVariables
+    attr_accessor :projectInformation
+    def self.default_make
+        projectInformation = BmProjectInformation.new
+        projectInformation.set_environment("Debug")
+        projectInformation.set_flavor("Esp")
+        projectInformation
+    end
+end
+```
+
 ## Issues and Feedback
 
 For any other issues and feedback about this plugin, please submit it to this repository.
