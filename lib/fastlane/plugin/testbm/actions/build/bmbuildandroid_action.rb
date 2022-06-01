@@ -4,8 +4,8 @@ module Fastlane
   module Actions
     class BmbuildandroidAction < Action
       def self.run(params)
-        app_information = params[:app_information]
-        other_action.gradle(task:"assemble", build_type: app_information[:android][:build_type])
+        project_information = params[:project_information]
+        other_action.gradle(task:"assemble", build_type: project_information.get_environment || "Debug", flavor: project_information.get_flavor)
         UI.message("Version built!")
       end
 
@@ -27,11 +27,11 @@ module Fastlane
 
       def self.available_options
         [
-          FastlaneCore::ConfigItem.new(key: :app_information,
-                                   env_name: "APP_INFORMATION",
-                                description: "The app information",
+          FastlaneCore::ConfigItem.new(key: :project_information,
+                                   env_name: "PROJECT_INFORMATION",
+                                description: "The project information",
                                    optional: false,
-                                       type: Hash)
+                                       type: BmProjectInformation)
         ]
       end
 

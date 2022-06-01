@@ -8,13 +8,13 @@ module Fastlane
     class BmslacknewversionAction < Action
       def self.run(params)
         destiny = params[:destiny]
-        app_information = params[:app_information]
+        project_information = params[:project_information]
         platform_type = params[:platform_type]
         
         message_text = ""
 
         payload = {
-            "App Name" => app_information[:app_name],
+            "App Name" => project_information.get_app_name,
             "Platform" => platform_type,
             "Destiny" => destiny,
             "Build Date" => Time.new.to_s  
@@ -49,11 +49,11 @@ module Fastlane
                                 description: "The chat message to be sent to Slack",
                                    optional: false,
                                        type: String),
-            FastlaneCore::ConfigItem.new(key: :app_information,
+            FastlaneCore::ConfigItem.new(key: :project_information,
                                         env_name: "APP_INFORMATION",
                                      description: "The app information",
                                         optional: false,
-                                            type: Hash),
+                                            type: BmProjectInformation),
             FastlaneCore::ConfigItem.new(key: :platform_type,
                                     env_name: "PLATFORM_TYPE",
                                     description: "The platform, can be Android or iOS",
