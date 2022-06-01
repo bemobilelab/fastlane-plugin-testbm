@@ -2,7 +2,6 @@ class BmProjectInformation
   def initialize()
     @environment = ""
     @flavor = ""
-    @privateAppName = ""
 
     @privateFabricMails = ""
     @privateFabricGroups = ""
