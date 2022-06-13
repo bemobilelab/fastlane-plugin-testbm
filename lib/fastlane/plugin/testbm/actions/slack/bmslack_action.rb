@@ -11,7 +11,7 @@ module Fastlane
         if is_exception
             Helper::BmSlack::notify_error_in_lane(other_action, message_text)
         else
-            Helper::BmSlack::notify(other_action, message_text)
+            Helper::BmSlack::notify(other_action: other_action, message_text: message_text, payload: {})
         end       
         UI.message("Message sent to Slack!")
       end
