@@ -4,20 +4,20 @@ module Fastlane
   module Actions
     class BmbuildiosAction < Action
       def self.run(params)
-        app_information = params[:app_information]
+        project_information = params[:project_information]
 
         other_action.cocoapods(try_repo_update_on_error: true)
 
         other_action.match(
-            type: app_information[:ios][:sign_config_type], 
+            type: project_information.get_ios_sign_config_type, 
             readonly: true, 
             clone_branch_directly: true, 
             verbose: true)
 
-        export_method = Helper::BmBuild::get_correct_export_method_name(match_type: app_information[:ios][:sign_config_type])
+        export_method = Helper::BmBuild::get_correct_export_method_name(match_type: project_information.get_ios_sign_config_type)
 
         other_action.gym(
-            scheme: app_information[:ios][:scheme_name],
+            scheme: project_information.get_ios_scheme,
             export_method: export_method,
             include_symbols: true,
             include_bitcode: true,
@@ -44,11 +44,11 @@ module Fastlane
 
       def self.available_options
         [
-          FastlaneCore::ConfigItem.new(key: :app_information,
-                                   env_name: "APP_INFORMATION",
-                                description: "The app information",
+          FastlaneCore::ConfigItem.new(key: :project_information,
+                                   env_name: "PROJECT_INFORMATION",
+                                description: "The project information",
                                    optional: false,
-                                       type: Hash)
+                                       type: BmProjectInformation)
         ]
       end
 
