@@ -2,6 +2,7 @@ class BmProjectInformation
   def initialize()
     @environment = ""
     @flavor = ""
+    @iosScheme = ""
 
     @privateFabricMails = ""
     @privateFabricGroups = ""
@@ -12,6 +13,8 @@ class BmProjectInformation
     @crashlitycsBuildSecret = ""
 
     @iosSignConfigType = ""
+    @iosTeamId = ""
+    @iosInfoPlistName = ""
 
     @browserstackUsername = ""
     @browserstackAccessKey = ""
@@ -32,6 +35,14 @@ class BmProjectInformation
 
   def get_flavor()
     @flavor
+  end
+
+  def set_ios_scheme(iosScheme)
+    @iosScheme = iosScheme
+  end
+
+  def get_ios_scheme()
+    @iosScheme
   end
 
   def set_private_fabric_mails(privateFabricMails)
@@ -81,12 +92,29 @@ class BmProjectInformation
   def get_crashlitycs_build_secret()
     @crashlitycsBuildSecret
   end
+
   def set_ios_sign_config_type(iosSignConfigType)
     @iosSignConfigType = iosSignConfigType
   end
 
   def get_ios_sign_config_type()
     @iosSignConfigType
+  end
+
+  def set_ios_team_id(iosTeamId)
+    @iosTeamId = iosTeamId
+  end
+
+  def get_ios_team_id()
+    @iosTeamId
+  end
+
+  def set_ios_info_plist_name(iosInfoPlistName)
+    @iosInfoPlistName = iosInfoPlistName
+  end
+
+  def get_ios_info_plist_name()
+    @iosInfoPlistName
   end
 
   def set_browserstack_username(browserstackUsername)
