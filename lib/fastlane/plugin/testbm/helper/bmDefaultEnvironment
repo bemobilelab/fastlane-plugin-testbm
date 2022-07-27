@@ -1,0 +1,7 @@
+class BmDefaultEnvironment
+    ENV["PRIVATE_APP_NAME"] = "appName" 
+
+    ENV["SLACK_ICON"] = "url_icon"
+    ENV["SLACK_URL"] = "slack_hook_url"
+
+end
