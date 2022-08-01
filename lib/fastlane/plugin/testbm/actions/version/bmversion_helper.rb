@@ -25,8 +25,8 @@ module Fastlane
             #The push is made to the current working branch
 
 
-            def self.increment_build_number_for_android(other_action, app_information)
-                self.version_func_update_build_number(other_action: other_action, app_information: app_information, platform_type: Helper::BmHelper::CONST_PROJECT_TYPE__ANDROID)
+            def self.increment_build_number_for_android(other_action, project_information)
+                self.version_func_update_build_number(other_action: other_action, app_information: project_information, platform_type: Helper::BmHelper::CONST_PROJECT_TYPE__ANDROID)
             end
 
             def version_func_update_build_number_for_ios(app_information:)
